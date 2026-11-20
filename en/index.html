@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+        <title>Skorpion</title>
+        <link rel="stylesheet" href="../assets/css/main.css" />
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="global">
+            <section class="topmenu">
+                <h1 class="chapter-head">
+                    <span class="title">Skorpion</span>
+                    <span class="icon">
+                        <button class="button" data-link="home.main">&#xeb06;</button>
+                    </span>
+                    <span class="icon">
+                        <button class="button" data-link="news">&#xeb1e;</button>
+                    </span>
+                    <span class="icon">
+                        <button class="button" data-link="settings">&#xeaf8;</button>
+                    </span>
+                </h1>
+            </section>
+            <section class="leftmenu">
+                <h5 class="chapter-head"><span class="title">Navigation</span> <span class="icon">&#xec05;</span></h5>
+                <div class="accordion">
+                  <button class="accordion__summary" type="button" aria-expanded="false">
+                    <span class="accordion__icon" aria-hidden="true"></span>
+                    <span class="accordion__title">Homepage</span>
+                  </button>
+                  <div class="accordion__content">
+                    <div class="accordion__inner">
+                        <ul>
+                            <li>
+                                <a data-link="home.main">Home Skorpion</a>
+                            </li>
+                            <li>
+                                <a data-link="home.about">About Skorpion</a>
+                            </li>
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+            </section>
+            <section class="main" id="main">
+                <div id="home.main">
+                    <h2>Skorpion</h2>
+                    
+                    <div class="code-block" data-file="file.sk" data-lang="sk">
+                      <div class="code-content">use std/io
+
+void main(arr args) {
+  io.sendln("Hello, World!")
+}</div>
+                    </div>
+                </div>
+                <div id="home.about">
+                    <h2>About Skorpion</h2>
+                    <p><b data-description="Hello<a>hi</a>">Skorpion</b> is high-level native-compile programming language with a static types and Garbage Collector (Compile-time GC).</p>
+                </div>
+                <div id="news">
+                    <h2>News</h2>
+                    <p class="mut" id="news-placeholder">Nothing to see yet.</p>
+                    <div class="new-paper" hidden>
+                        <h5 class="chapter-head"><span class="title">Navigation</span> <span class="icon">&#xec75; 2026-11-18 10:42</span></h5>
+                    </div>
+                </div>
+                <div id="settings">
+                    <h2>Settings</h2>
+                    <h6>Theme</h6>
+                    <div class="control">
+                        <p class="param">Current Theme</p>
+                        <div class="list" id="themeList">
+                            <span class="option">System</span>
+                            <span class="option">Dark</span>
+                            <span class="option">Light</span>
+                        </div>
+                    </div>
+                    <h6>Accessibility</h6>
+                    <div class="control">
+                        <p class="param">Focus Indicators</p>
+                        <div class="list" id="accessibilityList">
+                            <div class="toggle" id="accessibilityToggle"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="rightmenu">
+                <h5 class="chapter-head"><span class="title">Description</span> <span class="icon">&#xea6b;</span></h5>
+                <p class="mut" id="rm-placeholder">Nothing to see yet.</p>
+            </section>
+            <section class="down">
+                <h5 class="chapter-head"><span class="title">Credits</span> <span class="icon">&#xea66;</span></h5>
+                <p>Cool font <i>'Anonymous Pro'</i> by <i>Mark Simonson</i>. &#xeb05; Thanks!</p>
+                <p>Icons powered by <a href="https://github.com/ryanoasis/nerd-fonts" target="_blank" rel="noopener noreferrer">NerdFonts</a> (<a href="https://github.com/ryanoasis/nerd-fonts/blob/master/license-audit.md" target="_blank" rel="noopener noreferrer">License Audit</a>).</p>
+                <hr>
+                <p style="text-align: center;">All rights reserved. (c) 2026 iamtowvee</p>
+            </section>
+        </div>
+        
+        <script src="../assets/src/details.js"></script>
+        <script src="../assets/src/nav.js"></script>
+        <script src="../assets/src/code.js"></script>
+        <script src="../assets/src/options.js"></script>
+        <script src="../assets/src/settings.js"></script>
+        <script src="../assets/src/description.js"></script>
+    </body>
+</html>
