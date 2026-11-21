@@ -1,42 +1,130 @@
 document.addEventListener('DOMContentLoaded', function() {
     const tokenDescriptions = {
         kw: {
-            'use': 'Импортирует модуль или пространство имен',
-            'func': 'Объявляет новую функцию',
-            'let': 'Объявляет неизменяемую переменную',
-            'return': 'Завершает выполнение функции и возвращает значение',
-            'if': 'Условный оператор',
-            'else': 'Альтернативная ветка условного оператора'
+            'use': 'Imports a module or namespace',
+            'const': 'Declares an immutable variable',
+            'func': 'Declares a new function',
+            'if': 'Conditional statement',
+            'elsif': 'Alternative conditional branch',
+            'else': 'Fallback conditional branch',
+            'case': 'Pattern matching statement',
+            'for': 'Loop statement',
+            'in': 'Iterator keyword for for-loops',
+            'break': 'Exits the current loop',
+            'continue': 'Skips to the next iteration of the loop',
+            'do': 'Starts a do-while loop block',
+            'while': 'Loop statement with a condition',
+            'type': 'Type inspection operator',
+            'return': 'Completes function execution and returns a value',
+            'null': 'Null literal',
+            'void': 'Absence of return value',
+            'int': 'Integer type keyword',
+            'char': 'Character type keyword',
+            'string': 'String type keyword',
+            'async': 'Declares an asynchronous function',
+            'await': 'Suspends execution until an async value is ready',
+            'notready': 'Represents an unresolved async value',
+            'arr': 'Array type keyword',
+            'dict': 'Dictionary type keyword',
+            'float': 'Float type keyword',
+            'double': 'Double precision type keyword',
+            'bool': 'Boolean type keyword',
+            'any': 'Any type keyword',
+            'true': 'Boolean true literal',
+            'false': 'Boolean false literal',
+            'T': 'Generic type parameter',
+            'new': 'Declares a new error type',
+            'inherit': 'Specifies parent error type',
+            'Error': 'Base error type',
+            'throw': 'Throws an error',
+            'try': 'Starts a try block',
+            'catch': 'Catches an error',
+            'as': 'Binds caught error to a variable',
+            'includeC': 'Includes raw C code',
+            'IknowIdo': 'Explicitly allows unsafe code'
         },
         types: {
-            'bool': 'Boolean: логический тип (true или false)',
-            'int': 'Integer: целочисленный тип',
-            'string': 'String: текстовая строка',
-            'void': 'Void: отсутствие возвращаемого значения',
-            'arr': 'Array: упорядоченная коллекция элементов'
+            'int': 'Integer: whole number type',
+            'float': 'Float: single-precision floating point',
+            'double': 'Double: 64-bit floating point',
+            'bool': 'Boolean: true or false',
+            'string': 'String: text sequence',
+            'char': 'Character: single byte character',
+            'void': 'Void: no value',
+            'arr': 'Array: ordered collection',
+            'dict': 'Dictionary: key-value collection',
+            'any': 'Any: dynamic type',
+            'T': 'Generic: union type parameter',
+            'Error': 'Error: base error type'
         },
         op: {
-            '...': 'Оператор расширения (spread) или диапазон',
-            '..': 'Оператор диапазона (range)',
-            '->': 'Стрелочная функция или возврат типа'
-        }
+            '...': 'Spread operator',
+            '..': 'Range operator',
+            '==': 'Equality comparison',
+            '!=': 'Inequality comparison',
+            '<=': 'Less than or equal',
+            '>=': 'Greater than or equal',
+            '<': 'Less than',
+            '>': 'Greater than',
+            '+': 'Addition',
+            '-': 'Subtraction',
+            '*': 'Multiplication',
+            '/': 'Division',
+            '%': 'Modulo',
+            '**': 'Exponentiation',
+            '=': 'Assignment',
+            '+=': 'Addition assignment',
+            '-=': 'Subtraction assignment',
+            '*=': 'Multiplication assignment',
+            '/=': 'Division assignment',
+            '%=': 'Modulo assignment',
+            '**=': 'Exponentiation assignment',
+            '++': 'Increment',
+            '--': 'Decrement',
+            '&&': 'Logical AND',
+            '||': 'Logical OR',
+            '!': 'Logical NOT',
+            '&': 'Reference or import alias',
+            '^': 'Format suffix',
+            '~': 'Raw string delimiter',
+            '?': 'Ternary condition',
+            ':': 'Ternary separator',
+            '@': 'Version specifier',
+            '#': 'Wildcard import',
+            '$': 'String conversion'
+        },
+        str: {
+            '"': 'String literal',
+            '"""': 'Multiline string literal',
+            '~~~': 'Raw code block'
+        },
+        comment: {
+            '//': 'Single line comment',
+            '/*': 'Multiline comment'
+        },
+        num: {},
+        func: {}
     };
 
     const rules = {
         sk: {
-            keywords: "use func let return if else for while import class struct enum",
-            types: "int float bool string char auto void arr",
-            operators: "... .. -> => == != <= >= + - * / % = ++ --",
-            comment: "//"
+            keywords: "use const func if elsif else case for in break continue do while type return null void int char string async await notready arr dict float double bool any true false T new inherit Error throw try catch as includeC IknowIdo",
+            types: "int float double bool string char void arr dict any T Error",
+            operators: "... .. == != <= >= < > + - * / % ** = += -= *= /= %= **= ++ -- && || ! & ^ ~ ? : @ # $",
+            singleLineComment: "//",
+            multilineComments: [["/*", "*/"]],
+            strings: ["'", '"'],
+            multilineStrings: ['"""', "'''", '~~~'],
+            numberSuffix: "[fF]?"
         }
     };
 
     function languageName(short) {
         const langs = {
-            "sk": "skorpion",
-            "spc": "skorpion configuration",
-            "skd": "skorpion dependencies",
-            "txt": "plain text"
+            "sk": "Skorpion",
+            "spc": "Skorpion configuration",
+            "skd": "Skorpion dependencies",
+            "txt": "Plain text"
         };
         return langs[short] || 'Plain Text';
     }
@@ -45,7 +133,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
-    function escapeHtml(str) {
+    function escapeText(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function escapeAttr(str) {
         return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
@@ -59,51 +151,82 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function buildRegex(lang) {
         const rule = rules[lang] || rules.sk;
-        const stringPattern = `("(?:\\\\.|[^"\\\\])*"|'(?:\\\\.|[^'\\\\])*')`;
-        const commentPattern = `(${escapeRegex(rule.comment)}.*)`;
-        const kwTokens = parseTokens(rule.keywords).join('|');
-        const kwPattern = kwTokens ? `\\b(${kwTokens})\\b` : '';
-        const typeTokens = parseTokens(rule.types).join('|');
-        const typePattern = typeTokens ? `\\b(${typeTokens})\\b` : '';
-        const opTokens = parseTokens(rule.operators).join('|');
-        const opPattern = opTokens ? `(${opTokens})` : '';
-        const numPattern = `\\b(\\d+(?:\\.\\d+)?)\\b`;
-        const funcPattern = `\\b([a-zA-Z_]\\w*)(?=\\s*\\()`;
-        const parts = [stringPattern, commentPattern];
-        if (opPattern) parts.push(opPattern);
-        if (kwPattern) parts.push(kwPattern);
-        if (typePattern) parts.push(typePattern);
-        parts.push(numPattern);
-        parts.push(funcPattern);
-        return new RegExp(parts.filter(p => p).join('|'), 'g');
+        const parts = [];
+
+        const strAlts = [];
+        (rule.multilineStrings || []).forEach(pair => {
+            const open = Array.isArray(pair) ? pair[0] : pair;
+            const close = Array.isArray(pair) ? pair[1] : pair;
+            strAlts.push(`${escapeRegex(open)}[\\s\\S]*?${escapeRegex(close)}`);
+        });
+        (rule.strings || []).forEach(q => {
+            const e = escapeRegex(q);
+            strAlts.push(`${e}(?:\\\\.|[^${e}\\\\])*${e}`);
+        });
+        if (strAlts.length) parts.push(`(?<str>${strAlts.join('|')})`);
+
+        const comAlts = [];
+        (rule.multilineComments || []).forEach(([open, close]) => {
+            comAlts.push(`${escapeRegex(open)}[\\s\\S]*?${escapeRegex(close)}`);
+        });
+        if (rule.singleLineComment) comAlts.push(`${escapeRegex(rule.singleLineComment)}.*`);
+        if (comAlts.length) parts.push(`(?<comment>${comAlts.join('|')})`);
+
+        const opTokens = parseTokens(rule.operators);
+        if (opTokens.length) parts.push(`(?<op>${opTokens.join('|')})`);
+
+        const kwTokens = parseTokens(rule.keywords);
+        if (kwTokens.length) parts.push(`(?<kw>\\b(?:${kwTokens.join('|')})\\b)`);
+
+        const typeTokens = parseTokens(rule.types);
+        if (typeTokens.length) parts.push(`(?<type>\\b(?:${typeTokens.join('|')})\\b)`);
+
+        parts.push(`(?<num>\\b\\d+(?:\\.\\d+)*(?:${rule.numberSuffix || ''})\\b)`);
+        parts.push(`(?<func>\\b[a-zA-Z_]\\w*(?=\\s*\\())`);
+
+        return new RegExp(parts.join('|'), 'g');
     }
 
-    function highlightLine(line, regex) {
-        const escaped = escapeHtml(line);
-        return escaped.replace(regex, (match, str, comment, op, kw, type, num, func) => {
-            let className = '';
-            let tokenValue = '';
-            let descriptionAttr = '';
-            if (str) { className = 'code-str'; tokenValue = str; }
-            else if (comment) { className = 'code-comment'; tokenValue = comment; }
-            else if (op) { className = 'code-op'; tokenValue = op; }
-            else if (kw) { className = 'code-kw'; tokenValue = kw; }
-            else if (type) { className = 'code-type'; tokenValue = type; }
-            else if (num) { className = 'code-num'; tokenValue = num; }
-            else if (func) { className = 'code-func'; tokenValue = func; }
-            else { return match; }
-            const dictKey = className.replace('code-', '');
-            if (tokenDescriptions[dictKey] && tokenDescriptions[dictKey][tokenValue]) {
-                const descText = tokenDescriptions[dictKey][tokenValue];
-                descriptionAttr = ` data-description="${escapeHtml(descText)}"`;
-            }
-            return `<span class="${className}"${descriptionAttr}>${tokenValue}</span>`;
-        });
-    }
+    const TOKEN_ORDER = ['str', 'comment', 'op', 'kw', 'type', 'num', 'func'];
 
     function highlightCode(code, lang) {
         const regex = buildRegex(lang);
-        return code.split('\n').map(line => `<span class="code-line">${highlightLine(line, regex)}</span>`).join('');
+        const escaped = escapeText(code);
+
+        const html = escaped.replace(regex, function(match, ...args) {
+            const groups = args[args.length - 1];
+            let className = null;
+            let tokenValue = null;
+            let dictKey = null;
+
+            for (const key of TOKEN_ORDER) {
+                if (groups[key] !== undefined) {
+                    className = 'code-' + key;
+                    tokenValue = groups[key];
+                    dictKey = key;
+                    break;
+                }
+            }
+
+            if (!className) return match;
+
+            let descriptionAttr = '';
+            const dict = tokenDescriptions[dictKey];
+            if (dict && dict[tokenValue]) {
+                descriptionAttr = ` data-description="${escapeAttr(dict[tokenValue])}"`;
+            }
+
+            if (tokenValue.indexOf('\n') !== -1) {
+                return tokenValue.split('\n')
+                    .map(l => `<span class="${className}"${descriptionAttr}>${l}</span>`)
+                    .join('\n');
+            }
+            return `<span class="${className}"${descriptionAttr}>${tokenValue}</span>`;
+        });
+
+        return html.split('\n')
+            .map(line => `<span class="code-line">${line}</span>`)
+            .join('');
     }
 
     document.querySelectorAll('.code-block').forEach(block => {
@@ -112,12 +235,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const fileName = block.dataset.file || 'code.txt';
         const lang = block.dataset.lang || 'txt';
         const rawText = content.innerText;
+        const lineCount = rawText.split('\n').length;
+        const isInitiallyOpen = lineCount <= 15;
         const header = document.createElement('div');
         header.className = 'code-header';
         header.innerHTML = `
             <button class="co is-open" type="button" aria-expanded="true"></button>
-            <span class="file badge">${escapeHtml(fileName)}</span>
-            <span class="lang">${escapeHtml(languageName(lang))}</span>
+            <span class="file badge">${escapeAttr(fileName)}</span>
+            <span class="lang">${escapeAttr(languageName(lang))}</span>
             <button class="copy button" type="button">&#xebcc; Copy</button>
             <button class="rawbtn button" type="button">&#xeaee; Raw</button>
             <button class="downbtn button" type="button">&#xec74; Download</button>
@@ -128,7 +253,8 @@ document.addEventListener('DOMContentLoaded', function() {
         inner.innerHTML = highlightCode(rawText, lang);
         content.innerHTML = '';
         content.appendChild(inner);
-        // content.classList.add('is-open');
+        if (isInitiallyOpen) content.classList.add('is-open');
+        else content.classList.remove('is-open');
         const coBtn = header.querySelector('.co');
         coBtn.addEventListener('click', () => {
             const isOpen = content.classList.toggle('is-open');
