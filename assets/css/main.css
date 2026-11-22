@@ -85,8 +85,7 @@
 *:focus { outline: none; }
 *:focus-visible, .code-header .button:focus-visible, *[data-link]:focus { outline: 1px solid var(--accessbility-outline); }
 a[data-link]:focus { outline: none; }
-p:focus, a:focus, span:focus, b:focus, h1:focus,
-h2:focus, h3:focus, h4:focus, h5:focus, h6:focus {
+a:focus-visible {
   outline: none;
   text-decoration-line: underline;
   text-decoration-color: var(--accessbility-outline);
@@ -291,17 +290,16 @@ li.latest { padding-left: calc(var(--rad-normal) * 2); }
 
 blockquote {
   border-left: 3px solid var(--border-quote);
-  width: 100%;
   margin-left: calc(var(--rad-normal) / 2);
-  padding: var(--rad-normal) 0 var(--rad-normal) calc(var(--rad-normal) * 1.5);
-  vertical-align: middle;
+  margin-right: calc(var(--rad-normal) / 2);
+  padding: var(--rad-normal) calc(var(--rad-normal) / 2) var(--rad-normal) calc(var(--rad-normal) * 1.5);
   background: var(--bg-ui-element-quote);
 }
 blockquote > strong { color: var(--text-sel); }
 .card:has(.table) { margin-bottom: 0; }
 .table {
   display: grid;
-  grid-template-columns: repeat(var(--cols, 3), minmax(max-content, 1fr));
+  grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
   border-radius: var(--rad-inner);
   background-color: var(--bg-ui-element-code);
   border: 1px solid var(--border-base);
@@ -320,6 +318,8 @@ blockquote > strong { color: var(--text-sel); }
   font-weight: bold;
   font-size: 1.2em;
   text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .row > .cell {
@@ -330,6 +330,8 @@ blockquote > strong { color: var(--text-sel); }
   padding: var(--rad-inner) var(--rad-normal);
   border-right: 1px solid var(--border-base);
   border-bottom: 1px solid var(--border-base);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .row > .cell.manys {
   align-items: flex-start;
