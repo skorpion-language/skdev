@@ -83,7 +83,8 @@
 .code-content *[data-description] { cursor: text; }
 *[data-link] { cursor: pointer; user-select: none; }
 *:focus { outline: none; }
-*:focus-visible, *[data-link]:focus { outline: 1px solid var(--accessbility-outline); }
+*:focus-visible, .code-header .button:focus-visible, *[data-link]:focus { outline: 1px solid var(--accessbility-outline); }
+a[data-link]:focus { outline: none; }
 p:focus, a:focus, span:focus, b:focus, h1:focus,
 h2:focus, h3:focus, h4:focus, h5:focus, h6:focus {
   outline: none;
